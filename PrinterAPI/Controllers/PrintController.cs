@@ -354,14 +354,17 @@ namespace PrinterAPI.Controllers
 				ParameterFields parameterList = cryRpt.ParameterFields;
 				foreach (ParameterField param in parameterList)
 				{
-					//cryRpt.SetParameterValue(param.Name, Parameter); //SET PARAMETER
-					if (Type == "Documents")
+					if (Type == "Documents" || Type == "Schedules")
 					{
-						cryRpt.SetParameterValue("DocKey@", Parameter); //SET PARAMETER
-					}
-					else if (Type == "Schedules")
-					{
-						cryRpt.SetParameterValue("df", Parameter); //SET PARAMETER
+						if (FilePath.Contains("Product and Process Specs"))
+						{
+							cryRpt.SetParameterValue("DocKey@", Parameter); //SET PARAMETER
+						}
+						else
+						{
+							param.CurrentValues.AddValue(Parameter);
+						}
+
 					}
 				}
 				//if (Type == "Documents")
